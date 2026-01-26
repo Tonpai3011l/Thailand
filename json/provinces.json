@@ -1,0 +1,233 @@
+{
+    "กรุงเทพมหานคร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Bangkok_Montage_2017.jpg/800px-Bangkok_Montage_2017.jpg"
+    },
+    "สมุทรปราการ": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c9/Phran_Khiao_Phutthamonthon_Saito.jpg/800px-Phran_Khiao_Phutthamonthon_Saito.jpg"
+    },
+    "นนทบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/3a/Nonthaburi_City_Pillar_Shrine.jpg/800px-Nonthaburi_City_Pillar_Shrine.jpg"
+    },
+    "ปทุมธานี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Wat_Bok_Pathum_Thani.jpg/800px-Wat_Bok_Pathum_Thani.jpg"
+    },
+    "พระนครศรีอยุธยา": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/5e/Wat_Chaiwatthanaram%2C_Ayutthaya%2C_Thailand.jpg/800px-Wat_Chaiwatthanaram%2C_Ayutthaya%2C_Thailand.jpg"
+    },
+    "อ่างทอง": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4c/Great_Buddha_of_Thailand_Wat_Muang_Ang_Thong.jpg/800px-Great_Buddha_of_Thailand_Wat_Muang_Ang_Thong.jpg"
+    },
+    "ลพบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/86/Prang_Sam_Yot.jpg/800px-Prang_Sam_Yot.jpg"
+    },
+    "สิงห์บุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Wat_Phikun_Thong_Sing_Buri.jpg/800px-Wat_Phikun_Thong_Sing_Buri.jpg"
+    },
+    "ชัยนาท": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Wat_Pak_Khlong_Makham_Tao.jpg/800px-Wat_Pak_Khlong_Makham_Tao.jpg"
+    },
+    "สระบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Phra_Phutthabat_Temple_Saraburi.jpg/800px-Phra_Phutthabat_Temple_Saraburi.jpg"
+    },
+    "ชลบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Pattaya_Beach_Road_Evening.jpg/800px-Pattaya_Beach_Road_Evening.jpg"
+    },
+    "ระยอง": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Ko_Samet_beach.jpg/800px-Ko_Samet_beach.jpg"
+    },
+    "จันทบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8e/Cathedral_of_the_Immaculate_Conception_Chanthaburi.jpg/800px-Cathedral_of_the_Immaculate_Conception_Chanthaburi.jpg"
+    },
+    "ตราด": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e5/Koh_Chang_beach_Thailand.jpg/800px-Koh_Chang_beach_Thailand.jpg"
+    },
+    "ฉะเชิงเทรา": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0d/Wat_Sothonwararam.jpg/800px-Wat_Sothonwararam.jpg"
+    },
+    "ปราจีนบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4a/Wat_Kaeo_Phichit.jpg/800px-Wat_Kaeo_Phichit.jpg"
+    },
+    "นครนายก": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Sarika_Waterfall_Nakhon_Nayok.jpg/800px-Sarika_Waterfall_Nakhon_Nayok.jpg"
+    },
+    "สระแก้ว": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ee/Lalu_Sa_Kaeo.jpg/800px-Lalu_Sa_Kaeo.jpg"
+    },
+    "นครราชสีมา": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/fa/Thao_Suranari_Monument.jpg/800px-Thao_Suranari_Monument.jpg"
+    },
+    "บุรีรัมย์": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Phanom_Rung_Historical_Park.jpg/800px-Phanom_Rung_Historical_Park.jpg"
+    },
+    "สุรินทร์": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/50/Wat_Burapharam_Surin.jpg/800px-Wat_Burapharam_Surin.jpg"
+    },
+    "ศรีสะเกษ": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Wat_Pa_Maha_Chedi_Kaew.jpg/800px-Wat_Pa_Maha_Chedi_Kaew.jpg"
+    },
+    "อุบลราชธานี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/90/Wat_Sirindhorn_Wararam.jpg/800px-Wat_Sirindhorn_Wararam.jpg"
+    },
+    "ยโสธร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8a/Phraya_Khan_Khak_Museum.jpg/800px-Phraya_Khan_Khak_Museum.jpg"
+    },
+    "ชัยภูมิ": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ec/Pa_Hin_Ngam_National_Park.jpg/800px-Pa_Hin_Ngam_National_Park.jpg"
+    },
+    "อำนาจเจริญ": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Phra_Mongkhon_Ming_Mueang.jpg/800px-Phra_Mongkhon_Ming_Mueang.jpg"
+    },
+    "บึงกาฬ": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Three_Whale_Rocks_Bueng_Kan.jpg/800px-Three_Whale_Rocks_Bueng_Kan.jpg"
+    },
+    "หนองบัวลำภู": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Wat_Tham_Klong_Pen.jpg/800px-Wat_Tham_Klong_Pen.jpg"
+    },
+    "ขอนแก่น": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/4b/Wat_Nong_Wang_Khon_Kaen.jpg/800px-Wat_Nong_Wang_Khon_Kaen.jpg"
+    },
+    "อุดรธานี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1a/Red_Lotus_Sea_Udon_Thani.jpg/800px-Red_Lotus_Sea_Udon_Thani.jpg"
+    },
+    "เลย": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6f/Phu_Kradueng_National_Park.jpg/800px-Phu_Kradueng_National_Park.jpg"
+    },
+    "หนองคาย": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/ca/Sala_Keoku_Nong_Khai.jpg/800px-Sala_Keoku_Nong_Khai.jpg"
+    },
+    "มหาสารคาม": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6b/Phra_That_Na_Dun.jpg/800px-Phra_That_Na_Dun.jpg"
+    },
+    "ร้อยเอ็ด": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/8c/Wat_Pa_Kung_Roi_Et.jpg/800px-Wat_Pa_Kung_Roi_Et.jpg"
+    },
+    "กาฬสินธุ์": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/85/Phra_That_Yaku.jpg/800px-Phra_That_Yaku.jpg"
+    },
+    "สกลนคร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/4/49/Phra_That_Choeng_Chum.jpg/800px-Phra_That_Choeng_Chum.jpg"
+    },
+    "นครพนม": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6d/Phra_That_Phanom.jpg/800px-Phra_That_Phanom.jpg"
+    },
+    "มุกดาหาร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/30/Mukdahan_Manoroms_Buddha.jpg/800px-Mukdahan_Manoroms_Buddha.jpg"
+    },
+    "เชียงใหม่": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6c/Doi_Inthanon_Pagodas.jpg/800px-Doi_Inthanon_Pagodas.jpg"
+    },
+    "ลำพูน": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/ef/Wat_Phra_That_Hariphunchai.jpg/800px-Wat_Phra_That_Hariphunchai.jpg"
+    },
+    "ลำปาง": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/06/Wat_Phra_That_Lampang_Luang.jpg/800px-Wat_Phra_That_Lampang_Luang.jpg"
+    },
+    "อุตรดิตถ์": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/77/Wat_Phra_Thaen_Si_Lat_At.jpg/800px-Wat_Phra_Thaen_Si_Lat_At.jpg"
+    },
+    "แพร่": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/02/Wat_Phra_That_Cho_Hae.jpg/800px-Wat_Phra_That_Cho_Hae.jpg"
+    },
+    "น่าน": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/68/Wat_Phumin_Nan.jpg/800px-Wat_Phumin_Nan.jpg"
+    },
+    "พะเยา": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/67/Kwan_Phayao.jpg/800px-Kwan_Phayao.jpg"
+    },
+    "เชียงราย": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/91/Wat_Rong_Khun_2017.jpg/800px-Wat_Rong_Khun_2017.jpg"
+    },
+    "แม่ฮ่องสอน": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Wat_Phra_That_Doi_Kong_Mu.jpg/800px-Wat_Phra_That_Doi_Kong_Mu.jpg"
+    },
+    "นครสวรรค์": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/cd/Wat_Khiriwong_Nakhon_Sawan.jpg/800px-Wat_Khiriwong_Nakhon_Sawan.jpg"
+    },
+    "อุทัยธานี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Wat_Tha_Sung_Crystal_Sanctuary.jpg/800px-Wat_Tha_Sung_Crystal_Sanctuary.jpg"
+    },
+    "กำแพงเพชร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f0/Wat_Phra_Kaeo_Kamphaeng_Phet.jpg/800px-Wat_Phra_Kaeo_Kamphaeng_Phet.jpg"
+    },
+    "ตาก": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Bhumibol_Dam_Tak.jpg/800px-Bhumibol_Dam_Tak.jpg"
+    },
+    "สุโขทัย": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Sukhothai_Historical_Park.jpg/800px-Sukhothai_Historical_Park.jpg"
+    },
+    "พิษณุโลก": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/7/7b/Phra_Phuttha_Chinnarat.jpg/800px-Phra_Phuttha_Chinnarat.jpg"
+    },
+    "พิจิตร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c8/Wat_Tha_Luang_Phichit.jpg/800px-Wat_Tha_Luang_Phichit.jpg"
+    },
+    "เพชรบูรณ์": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/6/6a/Wat_Phra_That_Pha_Sorn_Kaew.jpg/800px-Wat_Phra_That_Pha_Sorn_Kaew.jpg"
+    },
+    "ราชบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/5/52/Damnoen_Saduak_Floating_Market.jpg/800px-Damnoen_Saduak_Floating_Market.jpg"
+    },
+    "กาญจนบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/10/River_Kwai_Bridge.jpg/800px-River_Kwai_Bridge.jpg"
+    },
+    "สุพรรณบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/9/9d/Dragon_Descending_Shrine_Suphan_Buri.jpg/800px-Dragon_Descending_Shrine_Suphan_Buri.jpg"
+    },
+    "นครปฐม": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/aa/Phra_Pathom_Chedi_2016.jpg/800px-Phra_Pathom_Chedi_2016.jpg"
+    },
+    "สมุทรสาคร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f2/Wat_Yai_Chom_Prasat.jpg/800px-Wat_Yai_Chom_Prasat.jpg"
+    },
+    "สมุทรสงคราม": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/ab/Mae_Klong_Railway_Market.jpg/800px-Mae_Klong_Railway_Market.jpg"
+    },
+    "เพชรบุรี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/07/Phra_Nakhon_Khiri.jpg/800px-Phra_Nakhon_Khiri.jpg"
+    },
+    "ประจวบคีรีขันธ์": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Hua_Hin_Railway_Station.jpg/800px-Hua_Hin_Railway_Station.jpg"
+    },
+    "นครศรีธรรมราช": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f6/Wat_Phra_Mahathat_Nakhon_Si_Thammarat.jpg/800px-Wat_Phra_Mahathat_Nakhon_Si_Thammarat.jpg"
+    },
+    "กระบี่": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/8/87/Railay_Beach_Krabi.jpg/800px-Railay_Beach_Krabi.jpg"
+    },
+    "พังงา": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/e/e0/James_Bond_Island_Phang_Nga.jpg/800px-James_Bond_Island_Phang_Nga.jpg"
+    },
+    "ภูเก็ต": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/3/37/Patong_Beach_Phuket.jpg/800px-Patong_Beach_Phuket.jpg"
+    },
+    "สุราษฎร์ธานี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/b/b3/Khao_Sok_National_Park.jpg/800px-Khao_Sok_National_Park.jpg"
+    },
+    "ระนอง": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/c/c5/Phu_Khao_Ya_Ranong.jpg/800px-Phu_Khao_Ya_Ranong.jpg"
+    },
+    "ชุมพร": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/1/1d/Hat_Sai_Ri_Chumphon.jpg/800px-Hat_Sai_Ri_Chumphon.jpg"
+    },
+    "สงขลา": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/d/d1/Golden_Mermaid_Songkhla.jpg/800px-Golden_Mermaid_Songkhla.jpg"
+    },
+    "สตูล": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f8/Koh_Lipe_beach.jpg/800px-Koh_Lipe_beach.jpg"
+    },
+    "ตรัง": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/a/a2/Koh_Kradan_bridge.jpg/800px-Koh_Kradan_bridge.jpg"
+    },
+    "พัทลุง": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/f/f4/Thale_Noi_Phatthalung.jpg/800px-Thale_Noi_Phatthalung.jpg"
+    },
+    "ปัตตานี": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/05/Pattani_Central_Mosque.jpg/800px-Pattani_Central_Mosque.jpg"
+    },
+    "ยะลา": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/2/23/Betong_Clock_Tower_Yala.jpg/800px-Betong_Clock_Tower_Yala.jpg"
+    },
+    "นราธิวาส": {
+        "image": "https://upload.wikimedia.org/wikipedia/commons/thumb/0/0a/Phra_Phuttha_Taksin_Ming_Mongkhon.jpg/800px-Phra_Phuttha_Taksin_Ming_Mongkhon.jpg"
+    }
+}

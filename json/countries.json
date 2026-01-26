@@ -1,0 +1,242 @@
+[
+    {
+        "thai_name": "ญี่ปุ่น",
+        "english_name": "Japan"
+    },
+    {
+        "thai_name": "เกาหลีใต้",
+        "english_name": "South Korea"
+    },
+    {
+        "thai_name": "สหรัฐอเมริกา",
+        "english_name": "USA"
+    },
+    {
+        "thai_name": "จีน",
+        "english_name": "China"
+    },
+    {
+        "thai_name": "ฝรั่งเศส",
+        "english_name": "France"
+    },
+    {
+        "thai_name": "เยอรมนี",
+        "english_name": "Germany"
+    },
+    {
+        "thai_name": "อังกฤษ",
+        "english_name": "United Kingdom"
+    },
+    {
+        "thai_name": "รัสเซีย",
+        "english_name": "Russia"
+    },
+    {
+        "thai_name": "แคนาดา",
+        "english_name": "Canada"
+    },
+    {
+        "thai_name": "ออสเตรเลีย",
+        "english_name": "Australia"
+    },
+    {
+        "thai_name": "นอร์เวย์",
+        "english_name": "Norway"
+    },
+    {
+        "thai_name": "สวิตเซอร์แลนด์",
+        "english_name": "Switzerland"
+    },
+    {
+        "thai_name": "สวีเดน",
+        "english_name": "Sweden"
+    },
+    {
+        "thai_name": "สิงคโปร์",
+        "english_name": "Singapore"
+    },
+    {
+        "thai_name": "อิตาลี",
+        "english_name": "Italy"
+    },
+    {
+        "thai_name": "เนเธอร์แลนด์",
+        "english_name": "Netherlands"
+    },
+    {
+        "thai_name": "เดนมาร์ก",
+        "english_name": "Denmark"
+    },
+    {
+        "thai_name": "เบลเยียม",
+        "english_name": "Belgium"
+    },
+    {
+        "thai_name": "สเปน",
+        "english_name": "Spain"
+    },
+    {
+        "thai_name": "โปรตุเกส",
+        "english_name": "Portugal"
+    },
+    {
+        "thai_name": "นิวซีแลนด์",
+        "english_name": "New Zealand"
+    },
+    {
+        "thai_name": "ออสเตรีย",
+        "english_name": "Austria"
+    },
+    {
+        "thai_name": "ฟินแลนด์",
+        "english_name": "Finland"
+    },
+    {
+        "thai_name": "ไอซ์แลนด์",
+        "english_name": "Iceland"
+    },
+    {
+        "thai_name": "ไอร์แลนด์",
+        "english_name": "Ireland"
+    },
+    {
+        "thai_name": "กรีซ",
+        "english_name": "Greece"
+    },
+    {
+        "thai_name": "ตุรกี",
+        "english_name": "Turkey"
+    },
+    {
+        "thai_name": "อิสราเอล",
+        "english_name": "Israel"
+    },
+    {
+        "thai_name": "สหรัฐอาหรับเอมิเรตส์",
+        "english_name": "United Arab Emirates"
+    },
+    {
+        "thai_name": "ซาอุดีอาระเบีย",
+        "english_name": "Saudi Arabia"
+    },
+    {
+        "thai_name": "กาตาร์",
+        "english_name": "Qatar"
+    },
+    {
+        "thai_name": "คูเวต",
+        "english_name": "Kuwait"
+    },
+    {
+        "thai_name": "มาเลเซีย",
+        "english_name": "Malaysia"
+    },
+    {
+        "thai_name": "เวียดนาม",
+        "english_name": "Vietnam"
+    },
+    {
+        "thai_name": "อินโดนีเซีย",
+        "english_name": "Indonesia"
+    },
+    {
+        "thai_name": "ฟิลิปปินส์",
+        "english_name": "Philippines"
+    },
+    {
+        "thai_name": "พม่า",
+        "english_name": "Myanmar"
+    },
+    {
+        "thai_name": "ลาว",
+        "english_name": "Laos"
+    },
+    {
+        "thai_name": "กัมพูชา",
+        "english_name": "Cambodia"
+    },
+    {
+        "thai_name": "อินเดีย",
+        "english_name": "India"
+    },
+    {
+        "thai_name": "ปากีสถาน",
+        "english_name": "Pakistan"
+    },
+    {
+        "thai_name": "บังกลาเทศ",
+        "english_name": "Bangladesh"
+    },
+    {
+        "thai_name": "ศรีลังกา",
+        "english_name": "Sri Lanka"
+    },
+    {
+        "thai_name": "เนปาล",
+        "english_name": "Nepal"
+    },
+    {
+        "thai_name": "อียิปต์",
+        "english_name": "Egypt"
+    },
+    {
+        "thai_name": "แอฟริกาใต้",
+        "english_name": "South Africa"
+    },
+    {
+        "thai_name": "บราซิล",
+        "english_name": "Brazil"
+    },
+    {
+        "thai_name": "อาร์เจนตินา",
+        "english_name": "Argentina"
+    },
+    {
+        "thai_name": "เม็กซิโก",
+        "english_name": "Mexico"
+    },
+    {
+        "thai_name": "โคลอมเบีย",
+        "english_name": "Colombia"
+    },
+    {
+        "thai_name": "เปรู",
+        "english_name": "Peru"
+    },
+    {
+        "thai_name": "โบลิเวีย",
+        "english_name": "Bolivia"
+    },
+    {
+        "thai_name": "ชิลี",
+        "english_name": "Chile"
+    },
+    {
+        "thai_name": "เอกวาดอร์",
+        "english_name": "Ecuador"
+    },
+    {
+        "thai_name": "ปารากวัย",
+        "english_name": "Paraguay"
+    },
+    {
+        "thai_name": "อุรุกวัย",
+        "english_name": "Uruguay"
+    },
+    {
+        "thai_name": "เวเนซุเอลา",
+        "english_name": "Venezuela"
+    },
+    {
+        "thai_name": "กายอานา",
+        "english_name": "Guyana"
+    },
+    {
+        "thai_name": "ซูรินาเม",
+        "english_name": "Suriname"
+    },
+    {
+        "thai_name": "เฟรนช์เกียนา",
+        "english_name": "French Guiana"
+    }
+]

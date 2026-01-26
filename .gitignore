@@ -1,0 +1,9 @@
+.env
+__pycache__/
+*.pyc
+.vscode/
+*.log
+json/user_locations.json
+json/role_settings.json
+json/database.json
+json/templates.json
