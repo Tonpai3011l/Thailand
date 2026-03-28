@@ -7,3 +7,8 @@ json/user_locations.json
 json/role_settings.json
 json/database.json
 json/templates.json
+json/bank_data.json
+json/crypto_data.json
+json/economy_data.json
+json/lottery_data.json
+json/server_stats.json

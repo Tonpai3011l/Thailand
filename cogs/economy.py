@@ -49,9 +49,10 @@ class Economy(commands.Cog):
         self.save_data()
 
     @app_commands.command(name="balance", description="เช็คยอดเงินในกระเป๋าและธนาคาร")
-    async def balance(self, interaction: discord.Interaction):
-        bal = self.get_balance(interaction.user.id)
-        embed = discord.Embed(title=f"💸 ทรัพย์สินของ {interaction.user.display_name}", color=discord.Color.blue())
+    async def balance(self, interaction: discord.Interaction, member: discord.Member = None):
+        target = member or interaction.user
+        bal = self.get_balance(target.id)
+        embed = discord.Embed(title=f"💸 ทรัพย์สินของ {target.display_name}", color=discord.Color.blue())
         embed.add_field(name="💵 กระเป๋าตังค์", value=f"{bal['wallet']:,} บาท", inline=True)
         embed.add_field(name="<:__:1459385992040546559> ธนาคาร", value=f"{bal['bank']:,} บาท", inline=True)
         embed.add_field(name="💰 รวมทั้งหมด", value=f"{bal['wallet'] + bal['bank']:,} บาท", inline=False)

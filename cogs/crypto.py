@@ -205,6 +205,7 @@ class StockManageView(ui.View):
     @ui.select(placeholder="เลือกการทำงาน...", options=[
         discord.SelectOption(label="เพิ่มหุ้นใหม่", value="add", emoji="➕", description="สร้างหุ้นตัวใหม่เข้าตลาด"),
         discord.SelectOption(label="แก้ไขราคาหุ้น", value="edit", emoji="📝", description="เปลี่ยนราคาหุ้นที่เป็นเจ้าของ"),
+        discord.SelectOption(label="โอนกรรมสิทธิ์", value="transfer", emoji="🤝", description="โอนเจ้าของหุ้นให้คนอื่น"),
         discord.SelectOption(label="ลบหุ้นออก", value="delete", emoji="🗑️", description="ลบหุ้นออกจากตลาด")
     ])
     async def action_select(self, interaction: discord.Interaction, select: ui.Select):
@@ -219,6 +220,8 @@ class StockManageView(ui.View):
             await self.show_edit_menu(interaction)
         elif val == "delete":
             await self.show_delete_menu(interaction)
+        elif val == "transfer":
+            await self.show_transfer_menu(interaction)
 
     async def show_add_menu(self, interaction: discord.Interaction):
         self.temp_symbol = None
@@ -398,6 +401,65 @@ class StockManageView(ui.View):
 
         await interaction.response.edit_message(embed=embed, view=view)
 
+    async def show_transfer_menu(self, interaction: discord.Interaction):
+        owned_stocks = {s: d for s, d in self.cog.data["market"].items() if d.get("owner_id") == interaction.user.id or interaction.user.guild_permissions.administrator}
+        
+        if not owned_stocks:
+            await interaction.response.send_message("<:w_:1459388961943457934> คุณไม่ได้เป็นเจ้าของหุ้นตัวใดเลย!", ephemeral=True)
+            return
+
+        embed = discord.Embed(title="🤝 โอนกรรมสิทธิ์หุ้น", description="กรุณาเลือกหุ้นจากเมนูด้านบน และเลือกผู้รับโอนจากเมนูด้านล่าง แล้วกดยืนยัน", color=discord.Color.purple())
+        
+        view = ui.View(timeout=180)
+        stock_options = [discord.SelectOption(label=s, value=s) for s in owned_stocks.keys()]
+        
+        stock_select = ui.Select(placeholder="1. เลือกหุ้นที่ต้องการโอน...", options=stock_options, row=0)
+        user_select = ui.UserSelect(placeholder="2. เลือกผู้รับโอน...", row=1)
+        
+        async def defer_callback(inter):
+            await inter.response.defer()
+            
+        stock_select.callback = defer_callback
+        user_select.callback = defer_callback
+        
+        confirm_btn = ui.Button(label="ยืนยันการโอน", style=discord.ButtonStyle.success, row=2)
+        cancel_btn = ui.Button(label="ยกเลิก", style=discord.ButtonStyle.secondary, row=2)
+        
+        async def confirm_callback(inter):
+            if inter.user.id != self.user.id:
+                await inter.response.send_message("<:w_:1459388961943457934> นี่ไม่ใช่เมนูของคุณ!", ephemeral=True)
+                return
+                
+            if not stock_select.values:
+                await inter.response.send_message("<:w_:1459388961943457934> กรุณาเลือกหุ้นที่ต้องการโอน!", ephemeral=True)
+                return
+            if not user_select.values:
+                await inter.response.send_message("<:w_:1459388961943457934> กรุณาเลือกผู้รับโอน!", ephemeral=True)
+                return
+                
+            selected_stock = stock_select.values[0]
+            target_user = user_select.values[0]
+            
+            if target_user.bot:
+                await inter.response.send_message("<:w_:1459388961943457934> ไม่สามารถโอนให้บอทได้!", ephemeral=True)
+                return
+                
+            self.cog.data["market"][selected_stock]["owner_id"] = target_user.id
+            self.cog.save_data()
+            await self.cog._update_dashboard_message()
+            
+            await inter.response.edit_message(content=f"<:c_:1459387176516190312> โอนหุ้น **{selected_stock}** ให้กับ {target_user.mention} สำเร็จ!", embed=None, view=None)
+
+        confirm_btn.callback = confirm_callback
+        cancel_btn.callback = lambda i: i.response.edit_message(embed=self.create_initial_embed(), view=self)
+        
+        view.add_item(stock_select)
+        view.add_item(user_select)
+        view.add_item(confirm_btn)
+        view.add_item(cancel_btn)
+        
+        await interaction.response.edit_message(embed=embed, view=view)
+
 class CryptoView(ui.View):
     def __init__(self, cog):
         super().__init__(timeout=None)
@@ -415,37 +477,91 @@ class CryptoView(ui.View):
             trade_btn.label = "ตลาดปิดทำการ"
             trade_btn.disabled = True
 
-    @ui.button(label="เข้าสู่พื้นที่ซื้อขาย", style=discord.ButtonStyle.success, custom_id="crypto_trade_btn")
+        market_len = len(self.cog.data.get("market", {}))
+        max_page = max(0, (market_len - 1) // 10)
+        current_page = self.cog.data.get("dashboard", {}).get("page", 0)
+        
+        prev_btn = [x for x in self.children if getattr(x, "custom_id", None) == "crypto_prev_btn"]
+        next_btn = [x for x in self.children if getattr(x, "custom_id", None) == "crypto_next_btn"]
+        
+        if prev_btn and next_btn:
+            if market_len <= 10:
+                self.remove_item(prev_btn[0])
+                self.remove_item(next_btn[0])
+            else:
+                prev_btn[0].disabled = (current_page == 0)
+                next_btn[0].disabled = (current_page >= max_page)
+
+    @ui.button(label="เข้าสู่พื้นที่ซื้อขาย", style=discord.ButtonStyle.success, custom_id="crypto_trade_btn", row=0)
     async def trade_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         embed = discord.Embed(title="🛒 เตรียมทำรายการซื้อขาย", description="กรุณาเลือกข้อมูลด่านล่างให้ครบถ้วน", color=discord.Color.blue())
         await interaction.response.send_message(embed=embed, view=TradeProcessView(self.cog), ephemeral=True)
 
-    @ui.button(label="ตรวจดูกระเป๋าหุ้น", style=discord.ButtonStyle.primary, custom_id="crypto_portfolio_btn")
+    @ui.button(label="ตรวจดูกระเป๋าหุ้น", style=discord.ButtonStyle.primary, custom_id="crypto_portfolio_btn", row=0)
     async def portfolio_button(self, interaction: discord.Interaction, button: discord.ui.Button):
-        portfolio = self.cog.get_portfolio(interaction.user.id)
-        if not portfolio:
-            await interaction.response.send_message("คุณยังไม่มีหุ้นใดๆ ในพอร์ตลงทุน", ephemeral=True)
-            return
-        
-        txt = ""
-        total_val = 0
+        user_id = interaction.user.id
+        portfolio = self.cog.get_portfolio(user_id)
         market = self.cog.data.get("market", {})
         
-        for symbol, qty in portfolio.items():
-            if qty > 0:
-                data = market.get(symbol, {"price": 0})
-                price = data['price']
-                val = price * qty
-                total_val += val
-                txt += f"- **{symbol}**: {qty} หน่วย (มูลค่า {val:,} บาท)\n"
+        txt_portfolio = ""
+        total_val = 0
         
-        if not txt:
-            txt = "ว่างเปล่า..."
+        if portfolio:
+            for symbol, qty in portfolio.items():
+                if qty > 0:
+                    data = market.get(symbol, {"price": 0})
+                    price = data.get('price', 0)
+                    val = price * qty
+                    total_val += val
+                    
+                    if isinstance(val, int) or (isinstance(val, float) and val.is_integer()):
+                        val_str = f"{int(val):,}"
+                    else:
+                        val_str = f"{val:,.2f}"
+                        
+                    txt_portfolio += f"🔹 **{symbol}**: {qty} หน่วย (มูลค่า {val_str} บาท)\n"
+        
+        if not txt_portfolio:
+            txt_portfolio = "ว่างเปล่า...\n"
+
+        owned_stocks = [sym for sym, data in market.items() if data.get('owner_id') == user_id]
+        
+        txt_owned = ""
+        if owned_stocks:
+            txt_owned = "\n👑 **หุ้นที่คุณเป็นเจ้าของ (เปิดขายในตลาด):**\n"
+            for sym in owned_stocks:
+                txt_owned += f"- **{sym}**\n"
             
         embed = discord.Embed(title=f"📊 พอร์ตการลงทุนของ {interaction.user.display_name}", color=discord.Color.blue())
-        embed.description = txt
-        embed.set_footer(text=f"มูลค่ารวมโดยประมาณ: {total_val:,} บาท")
+        embed.description = f"💼 **หุ้นที่ถือครอง:**\n{txt_portfolio}{txt_owned}"
+        
+        total_str = f"{int(total_val):,}" if isinstance(total_val, int) or (isinstance(total_val, float) and total_val.is_integer()) else f"{total_val:,.2f}"
+        embed.set_footer(text=f"มูลค่าหุ้นที่ถือครองรวม: {total_str} บาท")
         await interaction.response.send_message(embed=embed, ephemeral=True)
+
+    @ui.button(label="ก่อนหน้า", emoji="⬅️", style=discord.ButtonStyle.secondary, custom_id="crypto_prev_btn", row=1)
+    async def prev_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        dashboard = self.cog.data.get("dashboard", {})
+        if dashboard.get("page", 0) > 0:
+            dashboard["page"] -= 1
+            self.cog.save_data()
+            await interaction.response.defer()
+            await self.cog._update_dashboard_message()
+        else:
+            await interaction.response.send_message("นี่คือหน้าแรกแล้ว!", ephemeral=True)
+
+    @ui.button(label="ถัดไป", emoji="➡️", style=discord.ButtonStyle.secondary, custom_id="crypto_next_btn", row=1)
+    async def next_button(self, interaction: discord.Interaction, button: discord.ui.Button):
+        market_len = len(self.cog.data.get("market", {}))
+        max_page = max(0, (market_len - 1) // 10)
+        dashboard = self.cog.data.get("dashboard", {})
+        if dashboard.get("page", 0) < max_page:
+            dashboard["page"] = dashboard.get("page", 0) + 1
+            self.cog.save_data()
+            await interaction.response.defer()
+            await self.cog._update_dashboard_message()
+        else:
+            await interaction.response.send_message("นี่คือหน้าสุดท้ายแล้ว!", ephemeral=True)
 
 class Crypto(commands.Cog):
     def __init__(self, bot):
@@ -509,6 +625,7 @@ class Crypto(commands.Cog):
 
         channel_id = self.data["dashboard"]["channel_id"]
         message_id = self.data["dashboard"]["message_id"]
+        current_page = self.data["dashboard"].get("page", 0)
         
         channel = self.bot.get_channel(channel_id)
         if not channel:
@@ -519,11 +636,22 @@ class Crypto(commands.Cog):
         except discord.NotFound:
             return False
 
-        market_txt = "รายการหุ้นที่มีขายในตลาด:\n"
-        for sym, data in self.data["market"].items():
+        items = list(self.data["market"].items())
+        market_len = len(items)
+        max_page = max(0, (market_len - 1) // 10)
+        
+        if current_page > max_page:
+            current_page = max_page
+            self.data["dashboard"]["page"] = current_page
+            
+        start_idx = current_page * 10
+        end_idx = start_idx + 10
+        page_items = items[start_idx:end_idx]
+
+        market_txt = "รายการหุ้นที่มีขายในตลาด:\n" if page_items else "ไม่มีหุ้นในตลาด\n"
+        for sym, data in page_items:
             price = data['price']
-            # Format price: if integer, show as int, else float with 2 decimals
-            if isinstance(price, int) or price.is_integer():
+            if isinstance(price, int) or (isinstance(price, float) and price.is_integer()):
                 price_str = f"{int(price):,}"
             else:
                 price_str = f"{price:,.2f}"
@@ -536,10 +664,17 @@ class Crypto(commands.Cog):
         color = discord.Color.green() if status == "open" else discord.Color.red()
         
         embed = discord.Embed(title=f"📈 ตลาดหลักทรัพย์แห่งประเทศไทย {title_status}", description=market_txt, color=color)
-        embed.set_footer(text="กดปุ่มด้านล่างเพื่อทำการซื้อขาย")
         
-        await msg.edit(embed=embed, view=CryptoView(self))
-        return True
+        if market_len > 10:
+            embed.set_footer(text=f"หน้า {current_page + 1}/{max_page + 1} | กดปุ่มด้านล่างเพื่อทำการซื้อขาย")
+        else:
+            embed.set_footer(text="กดปุ่มด้านล่างเพื่อทำการซื้อขาย")
+        
+        try:
+            await msg.edit(embed=embed, view=CryptoView(self))
+            return True
+        except Exception:
+            return False
 
     def check_crypto_permission(self, interaction: discord.Interaction) -> bool:
         # Check for Administrator permission
@@ -557,6 +692,20 @@ class Crypto(commands.Cog):
             return True
             
         return False
+
+    @commands.Cog.listener()
+    async def on_message(self, message: discord.Message):
+        # ข้ามข้อความของบอท หรือข้อความส่วนตัว (DM)
+        if message.author.bot or isinstance(message.channel, discord.DMChannel):
+            return
+
+        dashboard = self.data.get("dashboard")
+        if dashboard and dashboard.get("channel_id") == message.channel.id:
+            try:
+                await message.delete()
+            except (discord.Forbidden, discord.NotFound, discord.HTTPException):
+                pass
+
 
     @app_commands.command(name="admin_crypto", description="[Admin] จัดการผู้มีสิทธิ์ดูแลระบบหุ้น")
     @app_commands.default_permissions(administrator=True)
@@ -663,28 +812,18 @@ class Crypto(commands.Cog):
             except (discord.NotFound, discord.Forbidden, discord.HTTPException):
                 pass # ข้ามถ้าไม่เจอหรือไม่มีสิทธิ์ลบ
 
-        market_txt = "รายการหุ้นที่มีขายในตลาด:\n"
-        for sym, data in self.data["market"].items():
-            price = data['price']
-            if isinstance(price, int) or (isinstance(price, float) and price.is_integer()):
-                price_str = f"{int(price):,}"
-            else:
-                price_str = f"{price:,.2f}"
+        if "dashboard" not in self.data or not isinstance(self.data["dashboard"], dict):
+            self.data["dashboard"] = {}
             
-            owner_mention = f"<@{data['owner_id']}>" if data.get('owner_id') else "ส่วนกลาง"
-            market_txt += f"🔹 **{sym}**: {price_str} บาท (เจ้าของ: {owner_mention})\n"
-            
-        embed = discord.Embed(title="📈 ตลาดหลักทรัพย์แห่งประเทศไทย (จำลอง)", description=market_txt, color=discord.Color.blue())
-        embed.set_footer(text="กดปุ่มด้านล่างเพื่อทำการซื้อขาย")
+        embed = discord.Embed(title="กำลังสร้างกระดานตลาดหุ้น...", color=discord.Color.blue())
+        msg = await interaction.channel.send(embed=embed)
         
-        msg = await interaction.channel.send(embed=embed, view=CryptoView(self))
-        
-        self.data["dashboard"] = {
-            "channel_id": interaction.channel.id,
-            "message_id": msg.id
-        }
+        self.data["dashboard"]["channel_id"] = interaction.channel.id
+        self.data["dashboard"]["message_id"] = msg.id
+        self.data["dashboard"]["page"] = 0
         self.save_data()
         
+        await self._update_dashboard_message()
         await interaction.response.send_message("<:c_:1459387176516190312> สร้างบอร์ดใหม่เรียบร้อยแล้ว (ลบอันเก่าทิ้งแล้ว)", ephemeral=True)
 
     @app_commands.command(name="update_crypto", description="[Admin] อัพเดทราคาหน้าบอร์ดซื้อขาย")
