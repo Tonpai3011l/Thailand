@@ -141,6 +141,14 @@ class TradeProcessView(ui.View):
             self.cog.update_portfolio(user_id, self.symbol, self.quantity)
             await interaction.response.edit_message(content=f"<:c_:1459387176516190312> ซื้อ **{self.symbol}** {qty_str} หน่วย เรียบร้อยแล้ว!{owner_msg}", embed=None, view=None)
 
+            if hasattr(economy_cog, 'log_transaction'):
+                log_emb = discord.Embed(title="📈 ซื้อหุ้น (Crypto)", color=discord.Color.green())
+                log_emb.add_field(name="ผู้ซื้อ", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+                log_emb.add_field(name="ชื่อหุ้น", value=f"{self.symbol}", inline=True)
+                log_emb.add_field(name="จำนวน", value=f"{qty_str} หน่วย", inline=True)
+                log_emb.add_field(name="ราคารวม", value=f"{cost_str} บาท", inline=True)
+                await economy_cog.log_transaction(log_emb)
+
         elif self.action_type == 'sell':
             current_qty = self.cog.get_portfolio(user_id).get(self.symbol, 0)
             if current_qty < self.quantity:
@@ -160,6 +168,14 @@ class TradeProcessView(ui.View):
             economy_cog.update_balance(user_id, total_cost, "wallet")
             self.cog.update_portfolio(user_id, self.symbol, -self.quantity)
             await interaction.response.edit_message(content=f"<:c_:1459387176516190312> ขาย **{self.symbol}** {qty_str} หน่วย เรียบร้อยแล้ว!{owner_msg}", embed=None, view=None)
+
+            if hasattr(economy_cog, 'log_transaction'):
+                log_emb = discord.Embed(title="📉 ขายหุ้น (Crypto)", color=discord.Color.red())
+                log_emb.add_field(name="ผู้ขาย", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+                log_emb.add_field(name="ชื่อหุ้น", value=f"{self.symbol}", inline=True)
+                log_emb.add_field(name="จำนวน", value=f"{qty_str} หน่วย", inline=True)
+                log_emb.add_field(name="ได้เงินรวม", value=f"{cost_str} บาท", inline=True)
+                await economy_cog.log_transaction(log_emb)
 
     @ui.button(label="ยกเลิก", emoji="<:w_:1459388961943457934>", style=discord.ButtonStyle.danger, row=3)
     async def cancel_button(self, interaction: discord.Interaction, button: ui.Button):
@@ -492,12 +508,12 @@ class CryptoView(ui.View):
                 prev_btn[0].disabled = (current_page == 0)
                 next_btn[0].disabled = (current_page >= max_page)
 
-    @ui.button(label="เข้าสู่พื้นที่ซื้อขาย", style=discord.ButtonStyle.success, custom_id="crypto_trade_btn", row=0)
+    @ui.button(emoji="🛒", label="เข้าสู่พื้นที่ซื้อขาย", style=discord.ButtonStyle.success, custom_id="crypto_trade_btn", row=0)
     async def trade_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         embed = discord.Embed(title="🛒 เตรียมทำรายการซื้อขาย", description="กรุณาเลือกข้อมูลด่านล่างให้ครบถ้วน", color=discord.Color.blue())
         await interaction.response.send_message(embed=embed, view=TradeProcessView(self.cog), ephemeral=True)
 
-    @ui.button(label="ตรวจดูกระเป๋าหุ้น", style=discord.ButtonStyle.primary, custom_id="crypto_portfolio_btn", row=0)
+    @ui.button(emoji="💸", label="ตรวจดูกระเป๋าหุ้น", style=discord.ButtonStyle.primary, custom_id="crypto_portfolio_btn", row=0)
     async def portfolio_button(self, interaction: discord.Interaction, button: discord.ui.Button):
         user_id = interaction.user.id
         portfolio = self.cog.get_portfolio(user_id)
@@ -797,8 +813,10 @@ class Crypto(commands.Cog):
 
     @app_commands.command(name="setup_crypto", description="[Admin] สร้างบอร์ดซื้อขายหุ้น")
     async def setup_crypto(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
+        
         if not self.check_crypto_permission(interaction):
-            await interaction.response.send_message("<:w_:1459388961943457934> คุณไม่มีสิทธิ์ในการใช้คำสั่งนี้", ephemeral=True)
+            await interaction.followup.send("<:w_:1459388961943457934> คุณไม่มีสิทธิ์ในการใช้คำสั่งนี้", ephemeral=True)
             return
 
         # ลบข้อความเก่าถ้ามี
@@ -824,7 +842,7 @@ class Crypto(commands.Cog):
         self.save_data()
         
         await self._update_dashboard_message()
-        await interaction.response.send_message("<:c_:1459387176516190312> สร้างบอร์ดใหม่เรียบร้อยแล้ว (ลบอันเก่าทิ้งแล้ว)", ephemeral=True)
+        await interaction.followup.send("<:c_:1459387176516190312> สร้างบอร์ดใหม่เรียบร้อยแล้ว (ลบอันเก่าทิ้งแล้ว)", ephemeral=True)
 
     @app_commands.command(name="update_crypto", description="[Admin] อัพเดทราคาหน้าบอร์ดซื้อขาย")
     async def update_crypto(self, interaction: discord.Interaction):

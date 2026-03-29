@@ -48,6 +48,13 @@ class Economy(commands.Cog):
         self.users[user_id][type] += amount
         self.save_data()
 
+    async def log_transaction(self, embed: discord.Embed):
+        channel = self.bot.get_channel(1487603625290371325)
+        if channel:
+            try:
+                await channel.send(embed=embed)
+            except: pass
+
     @app_commands.command(name="balance", description="เช็คยอดเงินในกระเป๋าและธนาคาร")
     async def balance(self, interaction: discord.Interaction, member: discord.Member = None):
         target = member or interaction.user
@@ -72,6 +79,11 @@ class Economy(commands.Cog):
         self.update_balance(interaction.user.id, amount, "bank")
         
         await interaction.response.send_message(f"🏦 ฝากเงิน **{amount:,} บาท** เข้าธนาคารเรียบร้อยแล้ว")
+        
+        embed = discord.Embed(title="🏦 ทำรายการฝากเงิน", color=discord.Color.green())
+        embed.add_field(name="ผู้ทำรายการ", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+        embed.add_field(name="จำนวนเงิน", value=f"+ {amount:,} บาท", inline=False)
+        await self.log_transaction(embed)
 
     @app_commands.command(name="withdraw", description="ถอนเงินจากธนาคาร")
     async def withdraw(self, interaction: discord.Interaction, amount: int):
@@ -87,6 +99,11 @@ class Economy(commands.Cog):
         self.update_balance(interaction.user.id, amount, "wallet")
         
         await interaction.response.send_message(f"💸 ถอนเงิน **{amount:,} บาท** ออกจากธนาคารเรียบร้อยแล้ว")
+
+        embed = discord.Embed(title="📤 ทำรายการถอนเงิน", color=discord.Color.orange())
+        embed.add_field(name="ผู้ทำรายการ", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+        embed.add_field(name="จำนวนเงิน", value=f"- {amount:,} บาท", inline=False)
+        await self.log_transaction(embed)
 
     @app_commands.command(name="work", description="ทำงานเพื่อชาติ (และปากท้อง)")
     async def work(self, interaction: discord.Interaction):
@@ -121,7 +138,13 @@ class Economy(commands.Cog):
         self.update_balance(interaction.user.id, -amount, "wallet")
         self.update_balance(recipient.id, amount, "wallet")
         
-        await interaction.response.send_message(f"<:c_:1459387176516190312> โอนเงิน **{amount} บาท** ให้กับ {recipient.mention} เรียบร้อยแล้ว!")
+        await interaction.response.send_message(f"<:c_:1459387176516190312> โอนเงิน **{amount:,} บาท** ให้กับ {recipient.mention} เรียบร้อยแล้ว!")
+
+        embed = discord.Embed(title="🔄 โอนเงิน", color=discord.Color.blue())
+        embed.add_field(name="ผู้โอน", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+        embed.add_field(name="ผู้รับ", value=f"{recipient.mention} ({recipient.id})", inline=False)
+        embed.add_field(name="จำนวนเงิน", value=f"{amount:,} บาท", inline=False)
+        await self.log_transaction(embed)
 
     @app_commands.command(name="give_money", description="มอบเงินให้ประชาชนด้วยความเสน่หา")
     async def give_money(self, interaction: discord.Interaction, member: discord.Member, amount: int):
@@ -137,7 +160,13 @@ class Economy(commands.Cog):
         self.update_balance(interaction.user.id, -amount, "wallet")
         self.update_balance(member.id, amount, "wallet")
         
-        await interaction.response.send_message(f"💸 คุณได้มอบเงิน **{amount} บาท** ให้กับ {member.mention}! ช่างใจบุญจริงๆ 🙏")
+        await interaction.response.send_message(f"💸 คุณได้มอบเงิน **{amount:,} บาท** ให้กับ {member.mention}! ช่างใจบุญจริงๆ 🙏")
+
+        embed = discord.Embed(title="🎁 ให้เงินโดยเสน่หา", color=discord.Color.purple())
+        embed.add_field(name="ผู้ให้", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+        embed.add_field(name="ผู้รับ", value=f"{member.mention} ({member.id})", inline=False)
+        embed.add_field(name="จำนวนเงิน", value=f"{amount:,} บาท", inline=False)
+        await self.log_transaction(embed)
 
     @app_commands.command(name="add_money", description="[Admin] เสกเงินเข้าระบบให้ประชาชน (Mention)")
     @app_commands.default_permissions(administrator=True)
@@ -164,6 +193,12 @@ class Economy(commands.Cog):
         embed.add_field(name="รวมทั้งหมด", value=f"{amount * len(processed_users):,} บาท", inline=False)
         
         await interaction.response.send_message(embed=embed, ephemeral=True)
+
+        log_embed = discord.Embed(title="⚠️ เสกเงินเข้าระบบ (Admin)", color=discord.Color.red())
+        log_embed.add_field(name="แอดมินผู้พิมพ์คำสั่ง", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+        log_embed.add_field(name="ผู้ได้รับเงิน", value=", ".join(processed_users), inline=False)
+        log_embed.add_field(name="จำนวนเงิน", value=f"{amount:,} บาท ต่อคน", inline=False)
+        await self.log_transaction(log_embed)
 
 async def setup(bot):
     await bot.add_cog(Economy(bot))

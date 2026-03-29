@@ -59,6 +59,13 @@ class LotteryModal(ui.Modal):
         type_display = "2 ตัวท้าย" if self.bet_type == "last_2" else "3 ตัวท้าย"
         await interaction.response.send_message(f"✅ ซื้อสลาก **{num_str}** แบบลุ้น **{type_display}** เรียบร้อยแล้ว!\n*(หักเงินจาก Wallet {ticket_price} บาท)*", ephemeral=True)
 
+        if hasattr(economy_cog, 'log_transaction'):
+            log_emb = discord.Embed(title="🎫 ซื้อสลากกินแบ่ง", color=discord.Color.blue())
+            log_emb.add_field(name="ผู้ซื้อ", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+            log_emb.add_field(name="เลขสลาก", value=f"{num_str} ({type_display})", inline=True)
+            log_emb.add_field(name="ราคา", value=f"{ticket_price} บาท", inline=True)
+            await economy_cog.log_transaction(log_emb)
+
 class LotteryTypeView(ui.View):
     def __init__(self, cog):
         super().__init__(timeout=120)
@@ -84,9 +91,11 @@ class LotteryMainView(ui.View):
             buy_btn.disabled = False
             buy_btn.emoji = "🛒"
             buy_btn.label = " ซื้อสลาก"
+            buy_btn.style = discord.ButtonStyle.success
         else:
             buy_btn.disabled = True
             buy_btn.label = "ปิดรับซื้อแล้ว"
+            buy_btn.style = discord.ButtonStyle.danger
 
     @ui.button(emoji="🛒", label=" ซื้อสลาก", style=discord.ButtonStyle.success, custom_id="lottery_buy_btn")
     async def buy_button(self, interaction: discord.Interaction, button: ui.Button):
@@ -170,6 +179,12 @@ class LotteryMainView(ui.View):
         if total_won > 0 and economy_cog:
             economy_cog.update_balance(user_id, total_won, "bank")
             result_txt += f"\n💰 เงินรางวัลรวม **{total_won:,}** บาท โอนเข้าบัญชีธนาคารเรียบร้อยแล้ว!"
+            
+            if hasattr(economy_cog, 'log_transaction'):
+                log_emb = discord.Embed(title="🎉 ถูกรางวัลสลากกินแบ่ง", color=discord.Color.gold())
+                log_emb.add_field(name="ผู้โชคดี", value=f"{interaction.user.mention} ({interaction.user.id})", inline=False)
+                log_emb.add_field(name="เงินรางวัลรวม", value=f"+ {total_won:,} บาท", inline=True)
+                await economy_cog.log_transaction(log_emb)
         
         embed = discord.Embed(
             title="✨ ผลการตรวจสลากของคุณ", 
@@ -236,7 +251,6 @@ class Lottery(commands.Cog):
                 description=f"สถานะตลาด: **{status_text}**\nสลากราคาใบละ **80 บาท**\n\n📌 **กติกาการจ่ายรางวัล:**\n- แบบลุ้น 2 ตัวท้าย ถูกรับ 2,000 บาท\n- แบบลุ้น 3 ตัวท้าย ถูกรับ 4,000 บาท\n- 🌟 **รางวัลพิเศษ:** ถ้าเลขที่ซื้อ 6 ตัวตรงกับรางวัลพิเศษเป๊ะๆ รับ 6,000,000 บาท ทันที! (ไม่ว่าจะลุ้นแบบไหน){prizes_str}", 
                 color=discord.Color.blue()
             )
-            embed.set_thumbnail(url="https://cdn-icons-png.flaticon.com/512/3233/3233816.png") # Example lottery ticket icon
             await msg.edit(embed=embed, view=LotteryMainView(self))
         except:
             pass
@@ -244,6 +258,7 @@ class Lottery(commands.Cog):
     @app_commands.command(name="setup_lottery", description="[Admin] ตั้งค่าบอร์ดขายสลากกินแบ่ง")
     @app_commands.default_permissions(administrator=True)
     async def setup_lottery(self, interaction: discord.Interaction):
+        await interaction.response.defer(ephemeral=True)
         # Clean old message if it exists
         if self.data.get("dashboard"):
             try:
@@ -259,7 +274,7 @@ class Lottery(commands.Cog):
         self.data["dashboard"] = {"channel_id": interaction.channel.id, "message_id": msg.id}
         self.save_data()
         await self._update_dashboard()
-        await interaction.response.send_message("✅ สร้างบอร์ดขายลอตเตอรี่สำเร็จ", ephemeral=True)
+        await interaction.followup.send("✅ สร้างบอร์ดขายลอตเตอรี่สำเร็จ", ephemeral=True)
 
     @app_commands.command(name="lottery_status", description="[Admin] เปิด/ปิด การซื้อสลาก")
     @app_commands.default_permissions(administrator=True)
